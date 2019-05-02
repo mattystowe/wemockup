@@ -1,0 +1,106 @@
+<div class="jumbotron">
+  <h2>Follow the steps below..</h2>
+  <p>
+    <small>Our magical mockup monkeys will take care of the rest...</small>
+  </p>
+</div>
+
+<div ng-repeat="inputoption in vm.item.sku.product.inputoptions">
+  <h3>
+    <span class="label label-default">{{$index+1}}</span>
+    <span ng-show="inputoption.value" class="label label-success"><span class="glyphicon glyphicon-ok"></span></span>
+    {{inputoption.name}}
+  </h3>
+  <img class="img img-responsive" src="{{inputoption.image}}" />
+  <div ta-bind ng-model="inputoption.description"></div>
+
+
+    <!-- Image Upload !-->
+    <div ng-if="inputoption.input_type=='imageupload'" >
+      <filepickermodal
+        pickerclass="btn btn-info"
+        iconclass="glyphicon glyphicon-picture"
+        buttontext="Upload and crop image"
+        multiple="false"
+        folders="false"
+        mimetypes="image/*"
+        extensions=""
+        services="COMPUTER,WEBCAM"
+        path="/inputstageuploads/"
+        access="public"
+        imagemanipulations="true"
+        imagedimmin="{{inputoption.data.imagedimmin}}"
+        imagecropui="true"
+        imagecropforce="true"
+        imagecropratio="{{inputoption.data.imagecropratio}}"
+        callback="vm.FileUploaded(file,$index)"
+        >
+      </filepickermodal>
+      <span class="label label-success" ng-show="inputoption.fileuploaded">{{inputoption.fileuploaded}}</span>
+      <div>
+        <img class="img img-responsive" ng-if="inputoption.fileuploaded" src="{{vm.getResponsiveFileUrl(inputoption.filestackurl,500,400);}}"/>
+      </div>
+    </div>
+
+
+    <!-- Video Upload !-->
+    <div ng-if="inputoption.input_type=='videoupload'" >
+      <filepickermodal
+        pickerclass="btn btn-info"
+        iconclass="glyphicon glyphicon-picture"
+        buttontext="Upload Video"
+        multiple="false"
+        folders="false"
+        mimetypes="video/*"
+        extensions=""
+        services="COMPUTER"
+        path="/inputstageuploads/"
+        access="public"
+        callback="vm.FileUploaded(file,$index)"
+        >
+      </filepickermodal>
+      <span class="label label-info" ng-show="inputoption.fileuploaded">{{inputoption.fileuploaded}}</span>
+    </div>
+
+    <!-- Text !-->
+    <div ng-if="inputoption.input_type=='text'" >
+      <form class="form-horizontal">
+        <div class="form-group">
+
+          <div class="col-md-6">
+            <input ng-model="inputoption.value"  type="text" class="form-control" placeholder="Custom Text Input">
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Dropdown !-->
+    <div ng-if="inputoption.input_type=='dropdown'" >
+      <form class="form-horizontal">
+        <div class="form-group">
+
+          <div class="col-md-6">
+            <select class="form-control" ng-model="inputoption.value" ng-options="item.value as item.value for item in inputoption.data.options">
+              <option selected value="">
+                {{inputoption.data.dropdowntitle}}
+              </option>
+            </select>
+          </div>
+        </div>
+      </form>
+    </div>
+
+
+  <hr />
+</div>
+
+<div>
+  <h3>
+    <span class="label label-default">{{vm.item.sku.product.inputoptions.length + 1}}</span> Confirm your settings.
+  </h3>
+  <p>
+    When you are ready.. We're ready.
+  </p>
+  <button ng-disabled="!vm.submitValid();" class="btn btn-lg btn-success" ng-click="vm.submitItem();">Go Mockup.. Go!</button>
+
+</div>

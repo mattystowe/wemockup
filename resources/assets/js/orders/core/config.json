@@ -1,0 +1,11 @@
+{
+  "development": {  
+    "endpoint": "http://localhost:8081",
+    "ratecardendpoint": "http://localhost:8082" 
+  },
+
+  "production": {  
+    "endpoint": "#{production:client:endpoint}",
+    "ratecardendpoint": "#{production:client:ratecardendpoint}"
+  }    
+}

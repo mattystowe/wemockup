@@ -1,0 +1,216 @@
+<div ng-controller="ItemController as vm">
+
+  <ol class="breadcrumb">
+    <li><a ui-sref="order({orderuid: vm.item.order.orderuid})">Order</a> : #{{vm.item.order.id}}</li>
+    <li class="active">{{vm.item.sku.product.name}}</li>
+  </ol>
+
+
+  <div class="row">
+    <div class="col-md-4">
+
+      <div class="panel panel-default">
+        <div class="panel-body">
+
+          <div class="media">
+                <div class="media-left">
+                  <a href="#">
+                    <img class="media-object" src="{{vm.item.sku.product.image}}">
+                  </a>
+                </div>
+                <div class="media-body">
+                  <h4 class="media-heading">{{vm.item.sku.product.name}}</h4>
+                  <small>{{vm.item.sku.name}}</small>
+                  <!-- PENDINGSETUP !-->
+                  <div ng-show="vm.item.status=='PENDINGSETUP'">
+
+                  </div>
+
+                  <!-- QUEUED or PROCESSING !-->
+                  <div ng-show="vm.item.status=='QUEUED' || vm.item.status=='PROCESSING'">
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                        Processing [{{vm.item.status}}]
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- FINISHING !-->
+                  <div ng-show="vm.item.status=='FINISHING'">
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                        Finishing...
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- COMPLETE !-->
+                  <div ng-show="vm.item.status=='COMPLETE'">
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                        Complete!
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- COMPLETE !-->
+                  <div ng-show="vm.item.status=='ERROR'">
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                        Error
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <!-- cancel button !-->
+                  <button class="btn btn-danger" ng-click="vm.cancel();" ng-show="vm.showCancelButton();">
+                    Cancel Item
+                  </button>
+
+                </div>
+              </div>
+
+
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+      <!-- Timestamps !-->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Time Stamps
+        </div>
+        <div class="panel-body">
+
+
+          <table class="table table-condensed small">
+            <tr>
+              <td>
+                Queued
+              </td>
+              <td>
+                {{vm.item.date_queued}}
+              </td>
+            </tr>
+            <tr>
+              <td>
+                Processing
+              </td>
+              <td>
+                {{vm.item.date_processing}}
+              </td>
+            </tr>
+              <tr>
+                <td>
+                  Finishing
+                </td>
+                <td>
+                  {{vm.item.date_finishing}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Complete
+                </td>
+                <td>
+                  {{vm.item.date_complete}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Failed
+                </td>
+                <td>
+                  {{vm.item.date_failed}}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Cancelled
+                </td>
+                <td>
+                  {{vm.item.date_cancelled}}
+                </td>
+              </tr>
+
+          </table>
+
+
+        </div>
+      </div>
+
+
+      <!-- ItemInputs !-->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Input Files
+        </div>
+        <div class="panel-body">
+          <div ng-repeat="iteminput in vm.item.iteminputs">
+            {{iteminput.variable_name}} [{{iteminput.input_type}}] (<a href="{{iteminput.filestackurl}}" target="_blank">{{iteminput.filename}}</a><span ng-if="iteminput.input_type != 'imageupload' && iteminput.input_type != 'videoupload'">{{iteminput.value}}</span>)
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+      <!-- ItemPostprocs !-->
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Post Processing
+        </div>
+        <div class="panel-body">
+
+
+          <table class="table table-condensed small">
+            <tr ng-repeat="itempostproc in vm.itempostprocs">
+              <td>
+                {{itempostproc.postproc.name}}
+              </td>
+              <td>
+                <span class="{{vm.getstatusclass(itempostproc.status);}}">{{itempostproc.status}}</span>
+              </td>
+
+            </tr>
+          </table>
+
+
+        </div>
+      </div>
+
+
+    </div>
+
+
+    <!-- SECTION !-->
+    <div class="col-md-8">
+        <div ng-include="vm.getStageInclude();" class="my-fade-animation"></div>
+
+        <div ng-if="vm.item.eta_information.message != null">
+          <hr />
+          <blockquote>
+            <p>{{vm.item.eta_information.message}}</p>
+            <footer ng-if="vm.item.eta_information.reason != null">Why? <cite title="Source Title">{{vm.item.eta_information.reason}}</cite>
+              <p>
+                <small><a href="http://www.wemockup.com" target="_blank">Click here</a> if you want a more serious reason.</small>
+              </p>
+            </footer>
+
+          </blockquote>
+        </div>
+
+    </div>
+
+
+  </div>
+
+</div>

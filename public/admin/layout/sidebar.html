@@ -1,0 +1,13 @@
+<div class="col-sm-3 col-md-2 sidebar" ng-controller="SidebarController as vm">
+  <ul class="nav nav-sidebar">
+    <li class="{{vm.currentTab('dashboard')}}"><a ui-sref="dashboard">Dashboard</a></li>
+    <li class="{{vm.currentTab('hosts')}}"><a ui-sref="hosts">Workers</a></li>
+    <li class="{{vm.currentTab('orders')}}"><a ui-sref="orders">Orders</a></li>
+    <li class="{{vm.currentTab('categories')}}"><a ui-sref="categories">Categories</a></li>
+    <li class="{{vm.currentTab('types')}}"><a ui-sref="types">Types</a></li>
+    <li class="{{vm.currentTab('products')}}"><a ui-sref="products">Products</a></li>
+    <li class="{{vm.currentTab('skus')}}"><a ui-sref="skus">Skus</a></li>
+    <li class="{{vm.currentTab('frameconfigurations')}}"><a ui-sref="frameconfigurations">Frame Configurations</a></li>
+    <li class="{{vm.currentTab('postprocessing')}}"><a ui-sref="postprocessing">Post Processing Steps</a></li>
+  </ul>
+</div>

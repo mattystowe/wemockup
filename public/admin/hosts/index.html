@@ -1,0 +1,31 @@
+<div ng-controller="HostsController as vm">
+
+
+
+  <h2>
+    Healthy Workers {{vm.hosts.length}}
+  </h2>
+  <table class="table table-hover">
+    <tr>
+      <th>Instance-id</th>
+      <th>Hostname</th>
+      <th>Type</th>
+    </tr>
+
+    <tr ng-repeat="host in vm.hosts">
+      <td>
+        {{host.instance_id}}
+      </td>
+      <td>
+        {{host.hostname}}
+      </td>
+      <td>
+        {{host.instance_type}}
+      </td>
+    </tr>
+
+  </table>
+
+
+
+</div>

@@ -1,0 +1,434 @@
+<div ng-controller="ProductsViewController as vm">
+
+  <div class="modal fade" id="editModal">
+    <div class="modal-dialog">
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Product</h4>
+        </div>
+
+        <div class="modal-body">
+
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label for="name" class="col-md-2 control-label">Name</label>
+              <div class="col-md-10">
+                <input ng-model="vm.product.name"  type="text" class="form-control" placeholder="Name" value="{{vm.product.name}}">
+              </div>
+            </div>
+
+            <hr />
+            <div class="form-group">
+              <label for="name" class="col-md-2 control-label">Description</label>
+              <div class="col-md-10">
+              <textarea class="form-control" ng-model="vm.product.description"></textarea>
+            </div>
+            </div>
+            <hr />
+
+
+            <div class="form-group">
+              <label for="name" class="col-md-2 control-label">Category</label>
+              <div class="col-md-10">
+                <select class="form-control" ng-model="vm.product.category_id" ng-options="category.id as category.name for category in vm.availableCategories">
+                  <option value="">
+                    Select Category
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="name" class="col-md-2 control-label">Type</label>
+              <div class="col-md-10">
+                <select class="form-control" ng-model="vm.product.type_id"  ng-options="type.id as type.name for type in vm.availableTypes">
+                  <option value="">
+                    Select Product Type
+                  </option>
+                </select>
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <label for="name" class="col-md-2 control-label">Start Frame</label>
+              <div class="col-md-10">
+                <input ng-model="vm.product.frame_start"  type="text" class="form-control" placeholder="Start frame" value="{{vm.product.frame_start}}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="name" class="col-md-2 control-label">End Frame</label>
+              <div class="col-md-10">
+                <input ng-model="vm.product.frame_end"  type="text" class="form-control" placeholder="Start frame" value="{{vm.product.frame_end}}">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="name" class="col-md-2 control-label">Thumb Image</label>
+              <div class="col-md-10">
+                <filepickermodal
+                  pickerclass="btn btn-info"
+                  iconclass="glyphicon glyphicon-picture"
+                  buttontext="Upload and crop image"
+                  multiple="false"
+                  folders="false"
+                  mimetypes="image/*"
+                  extensions=""
+                  services="COMPUTER,WEBCAM"
+                  path="/productimages/"
+                  access="public"
+
+                  imagemanipulations="true"
+                  imagedim="167,94"
+                  imagecropui="true"
+                  imagecropforce="true"
+                  imagecropratio="16/9"
+                  callback="vm.productImageUploaded(file)"
+                  >
+                </filepickermodal>
+                <div>
+
+                  <img class="img img-responsive" src="{{vm.product.image}}" />
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="name" class="col-md-2 control-label">Full Image</label>
+              <div class="col-md-10">
+                <filepickermodal
+                  pickerclass="btn btn-info"
+                  iconclass="glyphicon glyphicon-picture"
+                  buttontext="Upload and crop image"
+                  multiple="false"
+                  folders="false"
+                  mimetypes="image/*"
+                  extensions=""
+                  services="COMPUTER,WEBCAM"
+                  path="/productimages/"
+                  access="public"
+                  imagemanipulations="true"
+                  imagedim="800,446"
+                  imagecropui="true"
+                  imagecropforce="true"
+                  imagecropratio="16/9"
+
+                  callback="vm.productFullImageUploaded(file)"
+                  >
+                </filepickermodal>
+                <div>
+
+                  <img class="img img-responsive" src="{{vm.product.fullimage}}" />
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="name" class="col-md-2 control-label">Location</label>
+              <div class="col-md-10">
+                <input ng-model="vm.product.location"  type="text" class="form-control" placeholder="Location" value="{{vm.product.location}}">
+              </div>
+            </div>
+
+
+
+          </form>
+
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-success" id="saveProductBtn" ng-click="vm.saveProduct();">Save</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+  <div class="modal fade" id="skuModal">
+    <div class="modal-dialog">
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Sku</h4>
+        </div>
+
+        <div class="modal-body">
+
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label for="name" class="col-md-2 control-label">Name</label>
+              <div class="col-md-10">
+                <input ng-model="vm.sku.name"  type="text" class="form-control" placeholder="Name" value="{{vm.sku.name}}">
+              </div>
+            </div>
+
+            <hr />
+            <div class="form-group">
+              <label for="name" class="col-md-2 control-label">Description</label>
+              <div class="col-md-10">
+              <textarea class="form-control" ng-model="vm.sku.description">{{vm.sku.description}}</textarea>
+            </div>
+            </div>
+            <hr />
+
+
+            <div class="form-group">
+              <label for="name" class="col-md-2 control-label">Frame Configuration</label>
+              <div class="col-md-10">
+                <select class="form-control" ng-model="vm.sku.frameconfig_id" ng-options="frameconfig.id as frameconfig.name for frameconfig in vm.frameconfigs">
+                  <option value="">
+                    Select Configuration
+                  </option>
+                </select>
+              </div>
+            </div>
+
+          </form>
+
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-success" id="saveProductBtn" ng-click="vm.saveSku();">Save</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+  <div class="modal fade" id="inputModal">
+    <div class="modal-dialog">
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Input Option</h4>
+        </div>
+
+        <div class="modal-body">
+
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label for="name" class="col-md-2 control-label">Name</label>
+              <div class="col-md-10">
+                <input ng-model="vm.inputoption.name"  type="text" class="form-control" placeholder="Name" value="{{vm.inputoption.name}}">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="name" class="col-md-2 control-label">Variable Name</label>
+              <div class="col-md-10">
+                <input ng-model="vm.inputoption.variable_name"  type="text" class="form-control" placeholder="Variable Name" value="{{vm.inputoption.variable_name}}">
+              </div>
+            </div>
+
+            <hr />
+              <!-- <div class="form-group">
+                <label for="name" class="col-md-2 control-label">Description</label>
+                <div class="col-md-10">
+                <textarea class="form-control" ng-model="vm.inputoption.description">{{vm.inputoption.description}}</textarea>
+              </div>
+            </div> !-->
+            Description
+            <div text-angular ng-model="vm.inputoption.description"></div>
+
+            <hr />
+
+            <hr />
+            <div class="form-group">
+              <label for="name" class="col-md-2 control-label">Image</label>
+              <div class="col-md-10">
+                <filepickermodal
+                  pickerclass="btn btn-info"
+                  iconclass="glyphicon glyphicon-picture"
+                  buttontext="Upload and crop image"
+                  multiple="false"
+                  folders="false"
+                  mimetypes="image/*"
+                  extensions=""
+                  services="COMPUTER,WEBCAM"
+                  path="/inputoptionimages/"
+                  access="public"
+                  imagemanipulations="true"
+                  imagecropui="true"
+                  imagecropmin="90,90"
+                  callback="vm.inputImageUploaded(file)"
+                  >
+                </filepickermodal>
+                <div>
+
+                  <img class="img img-responsive" src="{{vm.inputoption.image}}" />
+                </div>
+              </div>
+            </div>
+            <hr />
+
+            <div class="form-group">
+              <label for="name" class="col-md-2 control-label">Input</label>
+              <div class="col-md-10">
+                <select class="form-control" ng-model="vm.inputoption.input_type" ng-change="vm.inputTypeSelected();">
+                  <option value="">Select input type</option>
+                  <option value="imageupload">Image Upload</option>
+                  <option value="videoupload">Video Upload</option>
+                  <option value="text">Text Input</option>
+                  <option value="dropdown">Dropdown Menu</option>
+                </select>
+              </div>
+            </div>
+
+
+
+            <div class="form-group">
+              <label for="name" class="col-md-2 control-label">Data</label>
+              <div class="col-md-10">
+              <textarea class="form-control" ng-model="vm.inputoption.data">{{vm.inputoption.data}}</textarea>
+            </div>
+            </div>
+
+          </form>
+
+
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-success" id="saveInputBtn" ng-click="vm.saveInputOption();">Save</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+    <h3>
+      {{vm.product.name}}
+    </h3>
+
+    <div>
+      <img class="img img-responsive" src="{{vm.product.image}}" />
+    </div>
+
+    <div>
+
+      <img class="img img-responsive" src="{{vm.product.fullimage}}" />
+    </div>
+
+    <div>
+      <p>{{vm.product.description}}</p>
+
+      <p>
+        <strong>Category: </strong>{{vm.product.category.name}}<br />
+        <strong>Type: </strong>{{vm.product.type.name}}<br />
+        <strong>Start Frame: </strong>{{vm.product.frame_start}}<br />
+        <strong>End Frame: </strong>{{vm.product.frame_end}}<br />
+
+      </p>
+      <button class="btn btn-default" ng-click="vm.editProduct();">Edit</button>
+    </div>
+
+
+    <hr />
+
+    <h3>
+      SKUs
+    </h3>
+    <div>
+      <button class="btn btn-success btn" ng-click="vm.addSku();"><span class="glyphicon glyphicon-plus"></span> Add SKU</button>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div ng-repeat="sku in vm.product.skus" class="panel panel-default">
+            <div class="panel-body">
+              <span><strong>{{sku.id}}</strong>  - {{sku.name}}</span>
+
+                <span class="pull-right">
+                  <button class="btn btn-xs btn-default" ng-click="vm.editSku(sku);"><span class="glyphicon glyphicon-pencil"></span></button>
+                  <a ui-sref="skus.view({skuid: sku.id})"> <button class="btn btn-xs btn-primary">View</button></a>
+                  <button class="btn btn-xs btn-danger" ng-click="vm.deleteSku(sku,$index);"><span class="glyphicon glyphicon-remove"></span></button>
+                </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+
+    </div>
+
+
+
+    <hr />
+
+    <h3>
+      Input Options
+    </h3>
+
+    <div>
+      <button class="btn btn-success btn" ng-click="vm.addInputOption();"><span class="glyphicon glyphicon-plus"></span> Add Input Option</button>
+
+
+
+
+      <div class="row">
+        <div class="col-md-6">
+
+
+          <ul data-as-sortable="vm.dragControlListeners" data-ng-model="vm.product.inputoptions" class="list-unstyled">
+            <li ng-repeat="inputoption in vm.product.inputoptions" data-as-sortable-item>
+
+
+                <div  class="panel panel-default">
+                  <div class="panel-heading">
+                    <a><span data-as-sortable-item-handle class="glyphicon glyphicon-move"></span></a>
+                    <span><strong>{{inputoption.name}}</strong>  - {{inputoption.input_type}}</span>
+
+                      <span class="pull-right">
+                        <button class="btn btn-xs btn-default" ng-click="vm.editInputOption(inputoption);"><span class="glyphicon glyphicon-pencil"></span></button>
+                        <button class="btn btn-xs btn-danger" ng-click="vm.deleteInputOption(inputoption, $index);"><span class="glyphicon glyphicon-remove"></span></button>
+
+                      </span>
+                  </div>
+                  <div class="panel-body">
+
+                    <img ng-show="inputoption.image" class="img img-responsive" src="{{inputoption.image}}" />
+                    <div ta-bind ng-model="inputoption.description"></div>
+
+                    <hr />
+                    <p>
+
+                    <small>Variable: {{inputoption.variable_name}}</small><br />
+                    <small>data: {{inputoption.data}}</small>
+
+                    </p>
+                  </div>
+                </div>
+
+              </li>
+            </ul>
+
+
+
+        </div>
+
+      </div>
+
+
+
+    </div>
+
+</div>

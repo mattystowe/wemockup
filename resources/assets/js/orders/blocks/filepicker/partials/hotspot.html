@@ -1,0 +1,15 @@
+<div id="{{vm.id}}" ng-class="vm.progress.panelClass">
+  <h4>{{vm.progress.displaytext}}</h4>
+</div>
+
+<!-- Progress Indicator !-->
+      <div class="progress" ng-show="vm.progress.uploading">
+        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: {{vm.progress.percentage}}%">
+          Uploading {{vm.progress.percentage}} %
+        </div>
+      </div>
+
+<!-- errors !-->
+<div class="alert alert-danger" ng-show="vm.fperror">
+  {{vm.fperrormsg}}
+</div>

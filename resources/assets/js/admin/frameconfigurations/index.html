@@ -1,0 +1,125 @@
+<div ng-controller="FrameConfigurationsController as vm">
+
+
+
+  <div class="modal fade" id="configModal">
+    <div class="modal-dialog">
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Frame Configuration</h4>
+        </div>
+
+        <div class="modal-body">
+          <form class="form-horizontal">
+            <div class="form-group">
+              <label for="name" class="col-md-2 control-label">Name</label>
+              <div class="col-md-10">
+                <input ng-model="vm.frameconfig.name"  type="text" class="form-control" placeholder="Name" value="{{vm.frameconfig.name}}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="name" class="col-md-2 control-label">X</label>
+              <div class="col-md-10">
+                <input ng-model="vm.frameconfig.dimx"  type="text" class="form-control" placeholder="dimensions x" value="{{vm.frameconfig.dimx}}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="name" class="col-md-2 control-label">Y</label>
+              <div class="col-md-10">
+                <input ng-model="vm.frameconfig.dimy"  type="text" class="form-control" placeholder="dimensions y" value="{{vm.frameconfig.dimy}}">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="name" class="col-md-2 control-label">Output</label>
+              <div class="col-md-10">
+                <select class="form-control" ng-model="vm.frameconfig.outputformat">
+                  <option value="png">
+                    .png
+                  </option>
+                  <option value="jpg">
+                    .jpg
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="name" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                <div class="checkbox">
+                  <label>
+                    <input type="checkbox" ng-model="vm.frameconfig.watermark"> Watermark?
+                  </label>
+                </div>
+              </div>
+            </div>
+
+
+
+          </form>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-success" id="savePriorityBtn" ng-click="vm.saveConfig();">Save</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+
+<h1>Frame Configurations</h1>
+<hr />
+
+<button class="btn btn-success btn-lg" ng-click="vm.addConfig();"><span class="glyphicon glyphicon-plus"></span> Add</button>
+
+<table class="table table-hover">
+  <tr>
+    <th>
+      Name
+    </th>
+    <th>
+      X
+    </th>
+    <th>
+      Y
+    </th>
+    <th>
+      Output format
+    </th>
+    <th>
+      Watermark
+    </th>
+    <th>
+      Actions
+    </th>
+  </tr>
+  <tr ng-repeat="frameconfig in vm.frameconfigs">
+    <td>
+      {{frameconfig.name}}
+    </td>
+    <td>
+      {{frameconfig.dimx}}
+    </td>
+    <td>
+      {{frameconfig.dimy}}
+    </td>
+    <td>
+      {{frameconfig.outputformat}}
+    </td>
+    <td>
+      {{frameconfig.watermark}}
+    </td>
+    <td>
+      <button class="btn btn-xs btn-danger" ng-click="vm.deleteConfig($index);"><span class="glyphicon glyphicon-remove"></span></button>
+      <button class="btn btn-xs btn-default" ng-click="vm.editConfig(frameconfig);"><span class="glyphicon glyphicon-pencil"></span></button>
+    </td>
+  </tr>
+</table>
+
+</div>

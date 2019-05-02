@@ -1,0 +1,153 @@
+<div ng-controller="OrderController as vm">
+
+  <ol class="breadcrumb">
+    <li><a>Order</a> : #{{vm.order.id}}</li>
+  </ol>
+
+  <blockquote>
+    <p>{{vm.order.email}}</p>
+    <footer>{{vm.order.created_at}}</footer>
+  </blockquote>
+
+<div>
+  <h3>Items</h3>
+
+
+  <div ng-repeat="item in vm.order.items" class="panel panel-default my-fade-animation">
+    <div class="panel-body">
+
+      <div class="col-md-7">
+
+
+          <div class="media">
+            <div class="media-left">
+              <a href="#">
+                <img class="media-object" src="{{item.sku.product.image}}">
+              </a>
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">{{item.sku.product.name}}</h4>
+              <small>{{item.sku.name}}</small>
+            </div>
+          </div>
+
+      </div>
+
+
+
+
+      <!-- PENDINGSETUP !-->
+      <div ng-show="item.status=='PENDINGSETUP'" class="col-md-2">
+
+      </div>
+
+      <!-- QUEUED or PROCESSING !-->
+      <div ng-show="item.status=='QUEUED' || item.status=='PROCESSING'" class="col-md-2">
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+            Processing...({{item.status}})
+          </div>
+        </div>
+      </div>
+
+      <!-- FINISHING !-->
+      <div ng-show="item.status=='FINISHING'" class="col-md-2">
+        <div class="progress">
+          <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+            Finishing...
+          </div>
+        </div>
+      </div>
+
+      <!-- COMPLETE !-->
+      <div ng-show="item.status=='COMPLETE'" class="col-md-2">
+        <div class="progress">
+          <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+            Complete!
+          </div>
+        </div>
+      </div>
+
+      <!-- FAILED !-->
+      <div ng-show="item.status=='FAILED'" class="col-md-2">
+        <div class="progress">
+          <div class="progress-bar progress-bar-danger progress-bar-striped" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+            Item Failed
+          </div>
+        </div>
+      </div>
+
+      <!-- CANCELLED !-->
+      <div ng-show="item.status=='CANCELLED'" class="col-md-2">
+        <span class="text-muted">Cancelled</span>
+      </div>
+
+
+
+
+
+
+
+
+      <!-- PENDINGSETUP !-->
+      <div ng-show="item.status=='PENDINGSETUP'" class="col-md-3">
+        <span class="pull-right">
+          <a ui-sref="item({itemuid: item.itemuid})">
+            <button class="btn btn-primary btn-lg"><span class="glyphicon glyphicon-cog"></span> Setup!</button>
+          </a>
+        </span>
+      </div>
+
+      <!-- QUEUED or PROCESSING !-->
+      <div ng-show="item.status=='QUEUED' || item.status=='PROCESSING'" class="col-md-3">
+        <span class="pull-right">
+          <a ui-sref="item({itemuid: item.itemuid})">
+            <button class="btn btn-default btn-lg"><span class="glyphicon glyphicon-tasks"></span> View</button>
+          </a>
+        </span>
+      </div>
+
+      <!-- FINISHING!-->
+      <div ng-show="item.status=='FINISHING'" class="col-md-3">
+        <span class="pull-right">
+          <a ui-sref="item({itemuid: item.itemuid})">
+            <button class="btn btn-default btn-lg"><span class="glyphicon glyphicon-tasks"></span> View</button>
+          </a>
+        </span>
+      </div>
+
+      <!-- COMPLETE !-->
+      <div ng-show="item.status=='COMPLETE'" class="col-md-3">
+        <span class="pull-right">
+          <a ui-sref="item({itemuid: item.itemuid})">
+            <button class="btn btn-success btn-lg"><span class="glyphicon glyphicon-ok"></span> View</button>
+          </a>
+        </span>
+      </div>
+
+      <!-- FAILED !-->
+      <div ng-show="item.status=='FAILED'" class="col-md-3">
+        <span class="pull-right">
+          <a ui-sref="item({itemuid: item.itemuid})">
+            <button class="btn btn-danger btn-lg"><span class="glyphicon glyphicon-warning-sign"></span> View</button>
+          </a>
+        </span>
+      </div>
+
+      <!-- CANCELLED !-->
+      <div ng-show="item.status=='CANCELLED'" class="col-md-3">
+        <span class="pull-right">
+          <a ui-sref="item({itemuid: item.itemuid})">
+            <button class="btn btn-default btn-lg">View</button>
+          </a>
+        </span>
+      </div>
+
+
+
+    </div>
+  </div>
+
+</div>
+
+</div>

@@ -1,0 +1,12 @@
+version: 0.0
+os: windows
+files:
+  - source: \
+    destination: C:\deployment
+hooks:
+  BeforeInstall:
+    - location: \deployment\beforeinstall.bat
+      timeout: 900
+  AfterInstall:
+    - location: \deployment\afterinstall.bat
+      timeout: 900

@@ -1,0 +1,22 @@
+
+<div class="jumbotron">
+  <h2>Your creation is ready!</h2>
+  <p>
+    <small>Download the output files below</small>
+  </p>
+</div>
+
+
+<blockquote ng-repeat="outputfile in vm.item.outputfiles">
+  <p>
+    <span class="glyphicon glyphicon-file"></span>
+    <a href="{{outputfile.link}}" target="_blank">{{outputfile.filename}}
+      <button class="btn btn-success">Download</button>
+    </a>
+  </p>
+  <div ng-if="vm.isImage(outputfile.filename)">
+    <a href="{{outputfile.link}}" target="_blank">
+      <img class="img img-responsive" src="{{vm.getResponsiveFileUrl(outputfile.link,400,400);}}"/>
+    </a>
+  </div>
+</blockquote>
